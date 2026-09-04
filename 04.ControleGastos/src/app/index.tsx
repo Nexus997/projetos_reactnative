@@ -5,7 +5,9 @@ import {
   View, 
   TextInput, 
   TouchableOpacity,
-  StyleSheet } from 'react-native';
+  StyleSheet, 
+  FlatList
+} from 'react-native';
 
 
 type Gasto = {
@@ -55,6 +57,15 @@ const adicionarGasto = () => {
       <Text>Descrição</Text>
       <Text>Valor</Text>
     </View>
+
+    <FlatList
+    data={gastos}
+    renderItem={({ item }) => (
+      <View>
+        <Text>{item.descricao}</Text>
+        <Text>{item.valor.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</Text>
+      </View>
+    )}/>
 
   </View>
 
