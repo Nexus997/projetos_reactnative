@@ -1,4 +1,5 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useState } from 'react';
 import { 
   Text, 
   View, 
@@ -8,10 +9,11 @@ import {
 
 
 export default function HomeScreen() {
+
+const [descricao, setDescricao] = useState('');
+const [valor, setValor] = useState('');
+
   return (
-
-
-
 <SafeAreaView style={styles.container}>
   <Text>Controle de Gastos</Text>
   <Text>Total gasto</Text>
@@ -19,8 +21,8 @@ export default function HomeScreen() {
   <View>
 
     <Text>Novo gasto</Text>
-    <TextInput placeholder="Descrição"/>
-    <TextInput placeholder="Valor" keyboardType="numeric"/>
+    <TextInput placeholder="Descrição" value={descricao} onChangeText={setDescricao}/>
+    <TextInput placeholder="Valor" value={valor} onChangeText={setValor} keyboardType="numeric"/>
 
     <TouchableOpacity>
       <Text>Adicionar</Text>
