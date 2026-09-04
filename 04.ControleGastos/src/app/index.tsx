@@ -8,10 +8,28 @@ import {
   StyleSheet } from 'react-native';
 
 
+type Gasto = {
+  descricao: string;
+  valor: number;
+};
+
 export default function HomeScreen() {
 
 const [descricao, setDescricao] = useState('');
 const [valor, setValor] = useState('');
+const [gastos, setGastos] = useState<Gasto[]>([
+]);
+const adicionarGasto = () => {
+  if (descricao && valor) {
+    const novoGasto: Gasto = {
+      descricao,
+      valor: parseFloat(valor),
+    };
+    setGastos([...gastos, novoGasto]);
+    setDescricao('');
+    setValor('');
+  }
+}
 
   return (
 <SafeAreaView style={styles.container}>
@@ -24,7 +42,7 @@ const [valor, setValor] = useState('');
     <TextInput placeholder="Descrição" value={descricao} onChangeText={setDescricao}/>
     <TextInput placeholder="Valor" value={valor} onChangeText={setValor} keyboardType="numeric"/>
 
-    <TouchableOpacity>
+    <TouchableOpacity onPress={adicionarGasto}>
       <Text>Adicionar</Text>
     </TouchableOpacity>
 
