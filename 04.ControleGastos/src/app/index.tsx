@@ -32,12 +32,13 @@ const adicionarGasto = () => {
     setValor('');
   }
 }
+const totalGasto = gastos.reduce((total, gasto) => total + gasto.valor, 0);
 
   return (
 <SafeAreaView style={styles.container}>
   <Text>Controle de Gastos</Text>
   <Text>Total gasto</Text>
-  <Text>R$ 0,00</Text>
+  <Text>{totalGasto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Text>
   <View>
 
     <Text>Novo gasto</Text>
