@@ -1,22 +1,16 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
 import { Picker } from '@react-native-picker/picker'; 
+import GastoItem from '../components/gastoItem';
+import { Categoria, Gasto } from '../types/gasto';
 import { 
   Text, 
   View, 
   TextInput, 
   TouchableOpacity,
   StyleSheet, 
-  FlatList
+  FlatList                                             
 } from 'react-native';
-
-type Categoria ='Alimentação' | 'Transporte' | 'Lazer' | 'Contas' | 'Outros';
-
-type Gasto = {
-  descricao: string;
-  valor: number;
-  categoria: Categoria;
-};
 
 
 
@@ -79,15 +73,12 @@ const totalGasto = gastos.reduce((total, gasto) => total + gasto.valor, 0);
       
     </View>
 
-    <FlatList
-    data={gastos}
-    renderItem={({ item }) => (
-      <View>
-        <Text>{item.descricao}</Text>
-        <Text>{item.categoria}</Text>
-        <Text>{item.valor.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</Text>
-      </View>
-    )}/>
+ <FlatList
+  data={gastos}
+  renderItem={({ item }) => (
+    <GastoItem gasto={item} />
+  )}
+/>
 
   </View>
 
