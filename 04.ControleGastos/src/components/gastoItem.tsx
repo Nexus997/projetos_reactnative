@@ -1,11 +1,13 @@
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { Gasto } from '../types/gasto';
 
 type GastoItemProps = {
-  gasto: Gasto
+  gasto: Gasto;
+  onRemover: (id: number) => void;
+  onEditar: (id: number) => void;
 };
 
-export default function GastoItem({ gasto }: GastoItemProps) {
+export default function GastoItem({ gasto, onRemover, onEditar }: GastoItemProps) {
   return (
     <View>
       <Text>{gasto.descricao}</Text>
@@ -14,6 +16,13 @@ export default function GastoItem({ gasto }: GastoItemProps) {
         style: 'currency',
         currency: 'BRL',
       })}</Text>
+      <TouchableOpacity onPress={() => onRemover(gasto.id)}>
+        <Text>Excluir</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => onEditar(gasto.id)}>
+        <Text>Editar</Text>
+      </TouchableOpacity>
     </View>
   );
 }
