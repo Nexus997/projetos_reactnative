@@ -76,15 +76,31 @@ const totalGasto = gastos.reduce((total, gasto) => total + gasto.valor, 0);
 
   return (
 <SafeAreaView style={styles.container}>
-  <Text>Controle de Gastos</Text>
+  <Text style={styles.titulo}>Controle de Gastos</Text>
   <Text>Total gasto</Text>
-  <Text>{totalGasto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</Text>
-  <View>
-
+  <Text style={styles.total}>{totalGasto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</Text>
+  <View style={styles.formulario}>
     <Text>Novo gasto</Text>
-    <TextInput placeholder="Descrição" value={descricao} onChangeText={setDescricao}/>
-    <TextInput placeholder="Valor" value={valor} onChangeText={setValor} keyboardType="numeric"/>
+    <Text style={styles.label}>Descrição</Text>
+<TextInput
+  style={styles.input}
+  placeholder="Ex.: Mercado"
+  value={descricao}
+  onChangeText={setDescricao}
+/>
+
+<Text style={styles.label}>Valor</Text>
+<TextInput
+  style={styles.input}
+  placeholder="Ex.: 25,00"
+  value={valor}
+  onChangeText={setValor}
+  keyboardType="numeric"
+/>
+
+<Text style={styles.label}>Categoria</Text>
     <Picker //Elemento do react que funciona como um select do html, possibilitando o usuário a escolher uma opção de uma lista
+      style={styles.input}
       selectedValue={categoria} //Valor selecionado atualmente
       onValueChange={(itemValue) => setCategoria(itemValue)} //Função chamada quando o usuário seleciona uma opção e a chama de itemValue, que é o valor da opção selecionada. Depois chama a função setCategoria para atualizar o estado da categoria com o valor selecionado
     >
@@ -95,27 +111,27 @@ const totalGasto = gastos.reduce((total, gasto) => total + gasto.valor, 0);
           <Picker.Item label="Outros" value="Outros" />
     </Picker>
 
-    <TouchableOpacity onPress={adicionarGasto}>
-      <Text>Adicionar</Text>
+    <TouchableOpacity style={gastoEditado === null ? styles.botaoAdicionar : styles.botaoSalvar} onPress={adicionarGasto}>
+      <Text style={styles.textoBotaoAdicionar}>{ gastoEditado===null ? 'Adicionar' : 'Salvar alterações' }</Text>
     </TouchableOpacity>
 
   </View>
 
-  <View>
-    <Text>Meus gastos</Text>
+  <View style={styles.listaGastos}>
+    <Text style={styles.subtitulo}>Meus gastos</Text>
 
-    <View>      
-      <Text>Descrição</Text>
-      <Text>Categoria</Text>
-      <Text>Valor</Text>
-      
-    </View>
+  <View style={styles.cabecalho}>
+    <Text style={[styles.cabecalhoTexto, styles.cabecalhoDescricao]}>Descrição</Text>
+    <Text style={[styles.cabecalhoTexto, styles.cabecalhoCategoria]}>Categoria</Text>
+    <Text style={[styles.cabecalhoTexto, styles.cabecalhoValor]}>Valor</Text>
+  </View>
 
  <FlatList
   data={gastos}
   renderItem={({ item }) => (
     <GastoItem gasto={item} onRemover={removerGasto} onEditar={editarGasto}/>
   )}
+  keyExtractor={(item) => item.id.toString()}
 />
   
   </View>
@@ -132,4 +148,82 @@ const totalGasto = gastos.reduce((total, gasto) => total + gasto.valor, 0);
     flex: 1,
     padding: 20,
   },
-});
+    input: {
+    borderWidth: 1,
+    borderRadius: 15,
+    padding: 2,
+    fontSize: 15,
+    width:200,
+    height:30,
+    margin:2
+  },
+  label: {
+  fontSize: 16,
+  fontWeight: 'bold',
+  },
+  botaoAdicionar: {
+  padding:10,
+  borderRadius:10,
+  backgroundColor:'#2dffa1',
+  borderWidth:1,
+  alignSelf: 'flex-start',
+  margin: 5,
+  },
+  textoBotaoAdicionar: {
+  fontSize:12,
+  color:'#021910'
+  },
+  botaoSalvar:{
+  padding:10,
+  borderRadius:10,
+  backgroundColor:'#54afff',
+  borderWidth:1,
+  alignSelf: 'flex-start',
+  margin: 5,  
+  },
+  formulario: {
+    borderWidth:1,
+    padding:5,
+    borderRadius:10,
+    gap: 5,
+  },
+  listaGastos: {
+    margin:10,
+    flex:1,
+  },
+  cabecalho: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  cabecalhoDescricao: {
+    width: 200,
+  },
+
+  cabecalhoCategoria: {
+    width: 100,
+  },
+
+  cabecalhoValor: {
+    width: 100,
+  },
+
+  cabecalhoTexto: {
+  fontWeight: 'bold',
+  textDecorationLine:'underline'
+},  
+  titulo:{
+    fontSize:24,
+    fontWeight:'bold',
+    marginBottom: 10,
+  },
+ subtitulo: {
+  fontSize: 20,
+  fontWeight: 'bold',
+  marginBottom: 10,
+},
+  total:{
+    fontSize:20,
+    fontWeight:'bold',
+    marginBottom: 10,
+  },
+  });
